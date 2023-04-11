@@ -54,6 +54,7 @@ height: 40px;
 width: 40px;
 border-radius: 50px;
 cursor: pointer;
+object-fit: cover;
 `;
 
 const Topbar = () => {
