@@ -54,7 +54,7 @@ cursor: pointer;
 const SmallWidget = () => {
   return (
     <Container>
-        <Title>New members</Title>
+        <Title>New Join Members</Title>
         <UserList>
             <User>
                 <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" ></Image>

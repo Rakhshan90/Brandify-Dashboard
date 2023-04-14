@@ -1,7 +1,10 @@
-import { LineStyle, Person, Storefront, Timeline, TrendingUp,
-  BarChart, AttachMoney, MailOutline, FeedbackOutlined, ChatBubbleOutlineOutlined, WorkOutlineOutlined, ReportProblemOutlined} from '@material-ui/icons';
+import {
+  LineStyle, Person, Storefront, Timeline, TrendingUp,
+  BarChart, AttachMoney, MailOutline, FeedbackOutlined, ChatBubbleOutlineOutlined, WorkOutlineOutlined, ReportProblemOutlined
+} from '@material-ui/icons';
 
 import React from 'react'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -34,7 +37,10 @@ cursor: pointer;
 display: flex;
 align-items: center;
 border-radius: 10px;
-&:hover, &:active{
+&:hover{
+  background-color: #f1ecff;
+}
+&:active{
   background-color: #f1ecff;
 }
 `;
@@ -46,10 +52,12 @@ const Sidebar = () => {
         <SidebarMenu>
           <Title>Dashboard</Title>
           <List>
-            <ListItems active>
-              <LineStyle />
-              Home
-            </ListItems>
+            <Link to='/' className='link'>
+              <ListItems className='active'>
+                <LineStyle />
+                Home
+              </ListItems>
+            </Link>
             <ListItems>
               <Timeline />
               Analytics
@@ -63,14 +71,18 @@ const Sidebar = () => {
         <SidebarMenu>
           <Title>QuickMenu</Title>
           <List>
-            <ListItems>
-              <Person />
-              Users
-            </ListItems>
-            <ListItems>
-              <Storefront />
-              Products
-            </ListItems>
+            <Link to='/users' className='link' >
+              <ListItems>
+                <Person />
+                Users
+              </ListItems>
+            </Link>
+            <Link to='/products' className='link' >
+              <ListItems>
+                <Storefront />
+                Products
+              </ListItems>
+            </Link>
             <ListItems>
               <AttachMoney />
               Transactions
