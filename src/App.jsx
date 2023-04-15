@@ -29,7 +29,6 @@ function App() {
 
 
     <Router>
-        <Topbar />
         <Container>
           <Sidebar />
           <Routes>
