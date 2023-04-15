@@ -10,8 +10,6 @@ import NewUser from "./Pages/NewUser";
 import ProductList from "./Pages/ProductList";
 import Product from "./Pages/Product";
 import NewProduct from "./Pages/NewProduct";
-import Login from "./Pages/Login";
-// import { useSelector } from "react-redux";
 
 
 const Container = styled.div`
@@ -23,12 +21,10 @@ margin-top: 10px;
 
 function App() {
 
-  // const admin = useSelector((state) => state.user.currentUser.isAdmin);
-
   return (
 
-
     <Router>
+        <Topbar />
         <Container>
           <Sidebar />
           <Routes>
@@ -47,4 +43,3 @@ function App() {
 }
 
 export default App
-
