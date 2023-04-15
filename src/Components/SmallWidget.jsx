@@ -1,6 +1,7 @@
 import { Visibility } from '@material-ui/icons';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
+import { userRequest } from '../requestMethods';
 
 const Container = styled.div`
 flex: 1;
@@ -52,65 +53,32 @@ cursor: pointer;
 `;
 
 const SmallWidget = () => {
+    const[users, setUsers] = useState([])
+    useEffect(()=>{
+        const getUsers = async()=>{
+            try{
+                const res = await userRequest.get('users/?new=true');
+                setUsers(res.data)
+            }catch{}
+        }
+        getUsers()
+    }, [])
   return (
     <Container>
         <Title>New Join Members</Title>
         <UserList>
-            <User>
-                <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" ></Image>
+            {users.map((user)=>(
+            <User key={user._id}>
+                <Image src={user.img || "https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg"} ></Image>
                 <UserContainer>
-                    <Name>Henry</Name>
-                    <Role>Devops Engineer</Role>
+                    <Name>{user.username}</Name>
                 </UserContainer>
                 <Button>
                     <Visibility />
                     Display
                 </Button>
             </User>
-            <User>
-                <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" ></Image>
-                <UserContainer>
-                    <Name>Henry</Name>
-                    <Role>Devops Engineer</Role>
-                </UserContainer>
-                <Button>
-                    <Visibility />
-                    Display
-                </Button>
-            </User>
-            <User>
-                <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" ></Image>
-                <UserContainer>
-                    <Name>Henry</Name>
-                    <Role>Devops Engineer</Role>
-                </UserContainer>
-                <Button>
-                    <Visibility />
-                    Display
-                </Button>
-            </User>
-            <User>
-                <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" ></Image>
-                <UserContainer>
-                    <Name>Henry</Name>
-                    <Role>Devops Engineer</Role>
-                </UserContainer>
-                <Button>
-                    <Visibility />
-                    Display
-                </Button>
-            </User>
-            <User>
-                <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" ></Image>
-                <UserContainer>
-                    <Name>Henry</Name>
-                    <Role>Devops Engineer</Role>
-                </UserContainer>
-                <Button>
-                    <Visibility />
-                    Display
-                </Button>
-            </User>
+            ))}
         </UserList>
     </Container>
   )

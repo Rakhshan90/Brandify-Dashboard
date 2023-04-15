@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
+margin-top: 20px;
 flex: 4;
 `;
 const NewUserTitle = styled.h1``;

@@ -62,7 +62,7 @@ const Topbar = () => {
     <Container>
       <Wrapper>
         <TopLeft>
-          <Logo>RakhshanAdmin</Logo>
+          <Logo>Brandify Admin</Logo>
         </TopLeft>
         <TopRight>
           <TopBarIconContainer>

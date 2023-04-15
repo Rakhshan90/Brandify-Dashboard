@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { userRequest } from '../requestMethods';
+import {format} from 'timeago.js'
+
 
 const Container = styled.div`
 flex: 2;
@@ -52,6 +55,16 @@ color: #${props => props.type === "P" && "2a7ade"};
 `;
 
 const LargeWidget = () => {
+  const [orders, setOrders] = useState([])
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const res = await userRequest.get('orders');
+        setOrders(res.data)
+      } catch { }
+    }
+    getOrders()
+  }, [])
   return (
     <Container>
       <Title>Transactions</Title>
@@ -65,50 +78,18 @@ const LargeWidget = () => {
           </Row>
         </TableHead>
         <TableBody>
-          <Row>
-            <Rowdata type="user">
-              <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg"></Image>
-              <Name>Henry</Name>
-            </Rowdata>
-            <Rowdata>12-Apr-23</Rowdata>
-            <Rowdata>₹250000</Rowdata>
-            <Rowdata>
-              <Button type="A">Approved</Button>
-            </Rowdata>
-          </Row>
-          <Row>
-            <Rowdata type="user">
-              <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg"></Image>
-              <Name>Suzane</Name>
-            </Rowdata>
-            <Rowdata>12-Apr-23</Rowdata>
-            <Rowdata>₹250000</Rowdata>
-            <Rowdata>
-              <Button type="D">Declined</Button>
-            </Rowdata>
-          </Row>
-          <Row>
-            <Rowdata type="user">
-              <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg"></Image>
-              <Name>Mariyam</Name>
-            </Rowdata>
-            <Rowdata>12-Apr-23</Rowdata>
-            <Rowdata>₹250000</Rowdata>
-            <Rowdata>
-              <Button type="P">Pending</Button>
-            </Rowdata>
-          </Row>
-          <Row>
-            <Rowdata type="user">
-              <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg"></Image>
-              <Name>Yusuf</Name>
-            </Rowdata>
-            <Rowdata>12-Apr-23</Rowdata>
-            <Rowdata>₹250000</Rowdata>
-            <Rowdata>
-              <Button type="A">Approved</Button>
-            </Rowdata>
-          </Row>
+          {orders.map((order) => (
+            <Row key={order._id}>
+              <Rowdata type="user">
+                <Name>{order.userId}</Name>
+              </Rowdata>
+              <Rowdata>{format(order.createdAt)}</Rowdata>
+              <Rowdata>₹{order.amount}</Rowdata>
+              <Rowdata>
+                <Button type="A">{order.status}</Button>
+              </Rowdata>
+            </Row>
+          ))}
         </TableBody>
       </WidgetTable>
     </Container>
