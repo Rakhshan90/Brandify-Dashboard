@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react';
 import styled from 'styled-components'
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from '@material-ui/icons';
-import { productRows } from '../dummyData';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteProducts, getProducts } from '../redux/apiCalls';
 
 const Container = styled.div`
 flex: 4;
@@ -40,29 +41,28 @@ align-items: center;
 
 const ProductList = () => {
 
-  const [product, productUser] = useState(productRows);
+  const dispatch = useDispatch()
+  const products = useSelector((state)=>state.product.products)
+  useEffect(()=>{
+    getProducts(dispatch)
+  },[dispatch])
   const handleClick = (id)=>{
-    productUser(product.filter((item)=>item.id !== id));
+    deleteProducts(id, dispatch)
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 120 },
+    { field: '_id', headerName: 'ID', width: 280 },
     {
-      field: 'product', headerName: 'Product', width: 200, renderCell: (params) => {
+      field: 'product', headerName: 'Product', width: 250, renderCell: (params) => {
         return (
           <Wrapper>
             <Image src={params.row.img} alt="" ></Image>
-            {params.row.name}
+            {params.row.title}
           </Wrapper>
         )
       }
     },
-    { field: 'stock', headerName: 'Stock', width: 200 },
-    {
-      field: 'status',
-      headerName: 'Status',
-      width: 150,
-    },
+    { field: 'inStock', headerName: 'Stock', width: 200 },
     {
       field: 'price',
       headerName: 'Price',
@@ -78,7 +78,7 @@ const ProductList = () => {
           <Link to={"/product/" + params.row.id}>
             <Button>Edit</Button>
           </Link>
-            <DeleteIcon onClick={()=>handleClick(params.row.id)}>
+            <DeleteIcon onClick={()=>handleClick(params.row._id)}>
             <DeleteOutline />
             </DeleteIcon>
           </>
@@ -89,9 +89,11 @@ const ProductList = () => {
   return (
     <Container>
         <DataGrid
-        rows={product}
+        // rows={product}
+        rows={products}
         disableSelectionOnClick
         columns={columns}
+        getRowId={(row)=>row._id}
         pageSize={5}
         checkboxSelection
       />

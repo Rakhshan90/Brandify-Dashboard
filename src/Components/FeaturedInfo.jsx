@@ -1,6 +1,7 @@
 import { ArrowDownwardOutlined, ArrowUpwardOutlined } from '@material-ui/icons';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { userRequest } from '../requestMethods';
 
 
 const Container = styled.div`
@@ -34,12 +35,6 @@ display: flex;
 align-items: center;
 margin-left: 20px;
 `;
-const Icon = styled.div`
-color: ${props=>props.type === "down" && "red"};
-color: ${props=>props.type === "up" && "green"};
-font-size: 14px;
-margin-left: 5px;
-`;
 const Desc = styled.span`
 font-size: 15px;
 color: gray;
@@ -47,14 +42,31 @@ color: gray;
 
 
 const FeaturedInfo = () => {
+    const[income, setIncome] = useState([])
+    const[perc, setPerc] = useState(0)
+    useEffect(()=>{
+        const getIncome = async()=>{
+            try{
+                const res = await userRequest.get("orders/income");
+                setIncome(res.data)
+                setPerc((res.data[1]?.total * 100) / res.data[0]?.total - 100);
+            }catch{}
+        }
+        getIncome()
+    }, [])
+    console.log(income);
+    console.log(perc);
     return (
         <Container>
             <FeaturedItem>
                 <Title>Revenue</Title>
                 <FeaturedMoneyContainer>
-                    <FeaturedMoney>₹250000</FeaturedMoney>
+                    <FeaturedMoney>₹{income[1]?.total}</FeaturedMoney>
                     <FeaturedMoneyRate>
-                        -11.4 <Icon type="down"><ArrowDownwardOutlined /></Icon> 
+                        {perc}%
+                        {perc<0 ? (<ArrowDownwardOutlined style={{fontSize:"30px", marginLeft:"5px", 
+                    color:"red"}}/>) : (<ArrowUpwardOutlined style={{fontSize:"30px", marginLeft:"5px", 
+                    color:"green"}}/>) }
                     </FeaturedMoneyRate>
                 </FeaturedMoneyContainer>
                 <Desc>Compared to last month</Desc>
@@ -64,7 +76,8 @@ const FeaturedInfo = () => {
                 <FeaturedMoneyContainer>
                     <FeaturedMoney>₹450000</FeaturedMoney>
                     <FeaturedMoneyRate>
-                        -11.4 <Icon type="down"><ArrowDownwardOutlined /></Icon>
+                        -11.4 <ArrowDownwardOutlined style={{fontSize:"30px", marginLeft:"5px", 
+                    color:"red"}}/>
                     </FeaturedMoneyRate>
                 </FeaturedMoneyContainer>
                 <Desc>Compared to last month</Desc>
@@ -74,7 +87,8 @@ const FeaturedInfo = () => {
                 <FeaturedMoneyContainer>
                     <FeaturedMoney>₹260000</FeaturedMoney>
                     <FeaturedMoneyRate>
-                        +2.1 <Icon type="up"><ArrowUpwardOutlined /></Icon>
+                        +2.1 <ArrowUpwardOutlined style={{fontSize:"30px", marginLeft:"5px", 
+                    color:"green"}}/>
                     </FeaturedMoneyRate>
                 </FeaturedMoneyContainer>
                 <Desc>Compared to last month</Desc>
