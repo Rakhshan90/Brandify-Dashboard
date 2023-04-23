@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Topbar from '../Components/Topbar';
 import Sidebar from '../Components/Sidebar';
+import { Publish } from '@material-ui/icons';
+import { addUsers } from '../redux/apiCalls';
+import { useDispatch } from 'react-redux';
 
 
 const Wrapper = styled.div``;
@@ -9,13 +12,13 @@ const SidebarContainer = styled.div`
 display: flex;
 `;
 const Container = styled.div`
-margin-top: 20px;
+margin: 20px 0px;
 flex: 4;
 `;
 const NewUserTitle = styled.h1``;
 const NewUserForm = styled.form`
 display: flex;
-flex-wrap: wrap;
+flex-direction: column;
 `;
 const NewUserItem = styled.div`
 width: 400px;
@@ -66,6 +69,20 @@ font-weight: 600;
 
 
 const NewUser = () => {
+    const[inputs, setInputs] = useState({})
+    const dispatch = useDispatch()
+    const handleClick = (e)=>{
+        setInputs((prev)=>{
+            return{...prev, [e.target.name] : e.target.value };
+        })
+    }
+    
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        const user = {...inputs}
+        addUsers(user, dispatch)
+    }
+    console.log(inputs)
     return (
         <Wrapper>
             <Topbar />
@@ -77,48 +94,39 @@ const NewUser = () => {
                     <NewUserForm>
                         <NewUserItem>
                             <Label>Username</Label>
-                            <Input type="text" placeholder="chris" />
-                        </NewUserItem>
-                        <NewUserItem>
-                            <Label>Full Name</Label>
-                            <Input type="text" placeholder="chris bale" />
+                            <Input name="username" type="text" placeholder="chris" 
+                            onChange={handleClick} />
                         </NewUserItem>
                         <NewUserItem>
                             <Label>Email</Label>
-                            <Input type="email" placeholder="user@example.com" />
+                            <Input name="email" type="email" placeholder="user@example.com"
+                            onChange={handleClick}  />
                         </NewUserItem>
                         <NewUserItem>
                             <Label>Password</Label>
-                            <Input type="password" placeholder="password" />
+                            <Input name="password" type="password" placeholder="password"
+                            onChange={handleClick}  />
                         </NewUserItem>
                         <NewUserItem>
                             <Label>Phone</Label>
-                            <Input type="text" placeholder="+91 329382XXXX" />
+                            <Input name="phone" type="text" placeholder="+91 329382XXXX"
+                            onChange={handleClick}  />
                         </NewUserItem>
                         <NewUserItem>
                             <Label>Address</Label>
-                            <Input type="text" placeholder="UP | India" />
-                        </NewUserItem>
-                        <NewUserItem>
-                            <Label>Gender</Label>
-                            <NewUserGender>
-                                <Input type='radio' name='gender' value='male' id='male' />
-                                <Label for="male">Male</Label>
-                                <Input type='radio' name='gender' value='female' id='female' />
-                                <Label for="female">Female</Label>
-                                <Input type='radio' name='gender' value='other' id='other' />
-                                <Label for="other">Other</Label>
-                            </NewUserGender>
+                            <Input name="address" type="text" placeholder="UP | India"
+                            onChange={handleClick}  />
                         </NewUserItem>
                         <NewUserItem>
                             <Label>Active</Label>
-                            <Select name='active' id='active'>
+                            <Select name='active' id='active'
+                            onChange={handleClick}  >
                                 <Option value='yes'>Yes</Option>
                                 <Option value='no'>No</Option>
                             </Select>
                         </NewUserItem>
                         <NewUserItem>
-                            <NewUserButton>Create</NewUserButton>
+                            <NewUserButton onClick={handleSubmit}>Create</NewUserButton>
                         </NewUserItem>
                     </NewUserForm>
                 </Container>

@@ -1,9 +1,11 @@
 import { CalendarToday, Email, LocationSearching, MailOutline, PermIdentity, PhoneAndroid, Publish } from '@material-ui/icons';
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Topbar from '../Components/Topbar';
 import Sidebar from '../Components/Sidebar';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUsers } from '../redux/apiCalls';
 
 
 const Wrapper = styled.div``;
@@ -52,12 +54,7 @@ const UserShowTop = styled.div`
 display: flex;
 align-items: center;
 `;
-const Image = styled.img`
-width: 40px;
-height: 40px;
-border-radius: 50%;
-object-fit: cover;
-`;
+
 const UserShowTopTitle = styled.div`
 display: flex;
 flex-direction: column;
@@ -66,9 +63,7 @@ margin-left: 20px;
 const Name = styled.span`
 font-weight: 600;
 `;
-const Role = styled.span`
-font-weight: 300;
-`;
+
 
 
 const UserShowBottom = styled.div`
@@ -101,43 +96,29 @@ display: flex;
 justify-content: space-between;
 margin-top: 20px;
 `;
-const UserUpdateLeft = styled.div``;
+const UserUpdateRight = styled.div`
+`;
 const UserUpdateItem = styled.div`
 display: flex;
 flex-direction: column;
 margin-top: 10px;
 `;
 const Label = styled.label`
-font-size: 14px;
+font-size: 18px;
 margin-bottom: 5px;
 `;
 const Input = styled.input`
 border: none;
 border-bottom: 1px solid gray;
-width: 250px;
+width: 45vw;
 height: 30px;
 `;
 
-const UserUpdateRight = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-`;
-const UserUpdateUpload = styled.div`
-display: flex;
-align-items: center;
-`;
-const UserUpdateImage = styled.img`
-height: 100px;
-width: 100px;
-border-radius: 10px;
-object-fit: cover;
-margin-right: 20px;
-`;
 const UserUpdateButton = styled.button`
+margin: 20px 0px;
+padding: 5px 20px;
 border: none;
 border-radius: 5px;
-padding: 5px;
 background-color: #9820c9;
 color: #fff;
 cursor: pointer;
@@ -146,6 +127,22 @@ font-weight: 600;
 `;
 
 const User = () => {
+    const location = useLocation()
+    const dispatch = useDispatch()
+    const userId = location.pathname.split('/')[2]
+    const user = useSelector((state)=>state.user.users.find((user)=>user._id===userId))
+    const [inputs, setInputs] = useState({})
+
+    const handleClick = (e)=>{
+        setInputs((prev)=>{
+            return{...prev, [e.target.name]: e.target.value}
+        })
+    }
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        const user = {...inputs}
+        updateUsers(userId, user, dispatch)
+    }
     return (
         <Wrapper>
             <Topbar />
@@ -159,79 +156,57 @@ const User = () => {
                     <UserContainer>
                         <UserDisplay>
                             <UserShowTop>
-                                <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" alt=""></Image>
                                 <UserShowTopTitle>
-                                    <Name>Adam</Name>
-                                    <Role>Software Engineer</Role>
+                                    <Name>{user.username}</Name>
                                 </UserShowTopTitle>
                             </UserShowTop>
                             <UserShowBottom>
-                                <UserShowTitle>Account Details</UserShowTitle>
-                                <UserShowInfo>
-                                    <UserShowIcon>
-                                        <PermIdentity />
-                                    </UserShowIcon>
-                                    <UserShowInfoTitle>Adam3921</UserShowInfoTitle>
-                                </UserShowInfo>
-                                <UserShowInfo>
-                                    <UserShowIcon>
-                                        <CalendarToday />
-                                    </UserShowIcon>
-                                    <UserShowInfoTitle>10.05.1998</UserShowInfoTitle>
-                                </UserShowInfo>
                                 <UserShowTitle>Contact Details</UserShowTitle>
                                 <UserShowInfo>
                                     <UserShowIcon>
                                         <PhoneAndroid />
                                     </UserShowIcon>
-                                    <UserShowInfoTitle>+91 23121XXXXX</UserShowInfoTitle>
+                                    <UserShowInfoTitle>{user.phone}</UserShowInfoTitle>
                                 </UserShowInfo>
                                 <UserShowInfo>
                                     <UserShowIcon>
                                         <MailOutline />
                                     </UserShowIcon>
-                                    <UserShowInfoTitle>adam@gmail.com</UserShowInfoTitle>
+                                    <UserShowInfoTitle>{user.email}</UserShowInfoTitle>
                                 </UserShowInfo>
                                 <UserShowInfo>
                                     <UserShowIcon>
                                         <LocationSearching />
                                     </UserShowIcon>
-                                    <UserShowInfoTitle>Mumbai, India</UserShowInfoTitle>
+                                    <UserShowInfoTitle>{user.address}</UserShowInfoTitle>
                                 </UserShowInfo>
                             </UserShowBottom>
                         </UserDisplay>
                         <UserUpdate>
                             <UserUpdateTitle>Edit</UserUpdateTitle>
                             <UserUpdateForm>
-                                <UserUpdateLeft>
+                                <UserUpdateRight>
                                     <UserUpdateItem>
                                         <Label>Username</Label>
-                                        <Input type="text" placeholder="Adam3921" />
-                                    </UserUpdateItem>
-                                    <UserUpdateItem>
-                                        <Label>Full name</Label>
-                                        <Input type="text" placeholder="Adam sheikh" />
+                                        <Input name='username' type="text" placeholder={user.username}
+                                        onChange={handleClick} />
                                     </UserUpdateItem>
                                     <UserUpdateItem>
                                         <Label>Email</Label>
-                                        <Input type="text" placeholder="adam@gmail.com" />
+                                        <Input name='email' type="text" placeholder={user.email}
+                                        onChange={handleClick} />
                                     </UserUpdateItem>
                                     <UserUpdateItem>
                                         <Label>Phone</Label>
-                                        <Input type="text" placeholder="+91 23121XXXXX" />
+                                        <Input name='phone' type="text" placeholder={user.phone}
+                                        onChange={handleClick} />
                                     </UserUpdateItem>
                                     <UserUpdateItem>
                                         <Label>Address</Label>
-                                        <Input type="text" placeholder="Mumbai | India" />
+                                        <Input name='address' type="text" placeholder={user.address}
+                                        onChange={handleClick} />
                                     </UserUpdateItem>
-                                </UserUpdateLeft>
-                                <UserUpdateRight>
-                                    <UserUpdateUpload>
-                                        <UserUpdateImage src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" alt=""></UserUpdateImage>
-                                        <Label htmlFor='file'> <Publish style={{ cursor: "pointer" }} /> </Label>
-                                        <Input type='file' id='file' style={{ display: "none" }} />
-                                    </UserUpdateUpload>
-                                    <UserUpdateButton>Update</UserUpdateButton>
+                                    <UserUpdateButton onClick={handleSubmit}>Update</UserUpdateButton>
                                 </UserUpdateRight>
                             </UserUpdateForm>
                         </UserUpdate>

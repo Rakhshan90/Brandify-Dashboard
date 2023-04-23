@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Topbar from '../Components/Topbar';
 import Sidebar from '../Components/Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../redux/apiCalls';
+import { deleteUsers, getUsers } from '../redux/apiCalls';
 
 
 const Container = styled.div`
@@ -17,13 +17,6 @@ const Wrapper = styled.div`
 `;
 const SidebarContainer = styled.div`
 display: flex;
-`;
-const Image = styled.img`
-width: 32px;
-height: 32px;
-border-radius: 50%;
-object-fit: cover;
-margin-right: 10px;
 `;
 const Button = styled.button`
 border: none;
@@ -52,17 +45,17 @@ export default function UserList() {
     getUsers(dispatch)
   }, [dispatch])
   const handleClick = (id) => {
-    setUser(users.filter((item) => item.id !== id));
+    // setUser(users.filter((item) => item.id !== id));
+    deleteUsers(id, dispatch)
   }
 
   
   const columns = [
     { field: '_id', headerName: 'ID', width: 280 },
     {
-      field: 'username', headerName: 'User', width: 250, renderCell: (params) => {
+      field: 'username', headerName: 'Username', width: 200, renderCell: (params) => {
         return (
           <Wrapper>
-            <Image src={params.row.img} alt="" ></Image>
             {params.row.username}
           </Wrapper>
         )
@@ -72,8 +65,10 @@ export default function UserList() {
     {
       field: 'isAdmin',
       headerName: 'Status',
-      width: 150,
+      width: 140,
     },
+    { field: 'phone', headerName: 'Phone', width: 140 },
+    { field: 'address', headerName: 'Address', width: 180 },
     {
       field: 'action',
       headerName: 'Action',
@@ -81,10 +76,10 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
+            <Link to={"/user/" + params.row._id}>
               <Button>Edit</Button>
             </Link>
-            <DeleteIcon onClick={() => handleClick(params.row.id)}>
+            <DeleteIcon onClick={() => handleClick(params.row._id)}>
               <DeleteOutline />
             </DeleteIcon>
           </>
