@@ -1,7 +1,4 @@
-import styled from "styled-components";
 import "./App.css";
-import Sidebar from "./Components/Sidebar"
-import Topbar from "./Components/Topbar"
 import Home from "./Pages/Home";
 import UserList from "./Pages/UserList";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -15,12 +12,6 @@ import { useSelector } from "react-redux";
 
 
 
-const Container = styled.div`
-display: flex;
-margin-top: 10px;
-`;
-
-
 
 function App() {
 
@@ -28,32 +19,11 @@ function App() {
 
 
   return (
-
-    // <Router>
-
-    //   {admin ? (
-    //     <>
-    //       <Topbar />
-    //       <Container>
-    //         <Sidebar />
-    //         <Routes>
-    //           <Route exact path="/" element={<Home />} />
-    //           <Route path="/users" element={<UserList />} />
-    //           <Route path="/user/:userId" element={<User />} />
-    //           <Route path="/newUser" element={<NewUser />} />
-    //           <Route path="/products" element={<ProductList />} />
-    //           <Route path="/product/:productId" element={<Product />} />
-    //           <Route path="/newProduct" element={<NewProduct />} />
-    //         </Routes>
-    //       </Container>
-    //     </>) : <Route path="/login" element={<Login />} />}
-    // </Router>
-
     <Router>
-        <Topbar />
-        <Container>
-          <Sidebar />
-          <Routes>
+      <Routes>
+      <Route path="/login" element={<Login />} />
+        {admin && (
+          <>
             <Route exact path="/" element={<Home />} />
             <Route path="/users" element={<UserList />} />
             <Route path="/user/:userId" element={<User />} />
@@ -61,10 +31,8 @@ function App() {
             <Route path="/products" element={<ProductList />} />
             <Route path="/product/:productId" element={<Product />} />
             <Route path="/newProduct" element={<NewProduct />} />
-            <Route path="/login" element={admin? <Navigate to="/" /> : <Login/>} />
-            {/* <Route path="/login" element={<Login />} /> */}
-          </Routes>
-        </Container>
+          </>)}
+      </Routes>
     </Router>
   )
 }

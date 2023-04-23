@@ -5,13 +5,16 @@ import { DeleteOutline } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteProducts, getProducts } from '../redux/apiCalls';
+import Topbar from '../Components/Topbar';
+import Sidebar from '../Components/Sidebar';
 
+
+const Wrapper = styled.div``;
+const SidebarContainer = styled.div`
+display: flex;
+`;
 const Container = styled.div`
 flex: 4;
-`;
-const Wrapper = styled.div`
-display: flex;
-align-items: center;
 `;
 const Image = styled.img`
 width: 32px;
@@ -75,7 +78,7 @@ const ProductList = () => {
       renderCell: (params) => {
         return (
           <>
-          <Link to={"/product/" + params.row.id}>
+          <Link to={"/product/" + params.row._id}>
             <Button>Edit</Button>
           </Link>
             <DeleteIcon onClick={()=>handleClick(params.row._id)}>
@@ -87,6 +90,10 @@ const ProductList = () => {
     },
   ];
   return (
+    <Wrapper>
+      <Topbar />
+      <SidebarContainer>
+        <Sidebar />
     <Container>
         <DataGrid
         // rows={product}
@@ -94,10 +101,12 @@ const ProductList = () => {
         disableSelectionOnClick
         columns={columns}
         getRowId={(row)=>row._id}
-        pageSize={5}
+        pageSize={10}
         checkboxSelection
       />
     </Container>
+    </SidebarContainer>
+    </Wrapper>
   )
 }
 

@@ -1,6 +1,6 @@
-import { loginFailure, loginStart, loginSucces } from "./userRedux"
+import { getUserFail, getUserStart, getUserSuccess, loginFailure, loginStart, loginSucces } from "./userRedux"
 import { publicRequest, userRequest } from '../requestMethods';
-import { deleteProductFail, deleteProductStart, deleteProductSuccess, getProductFail, getProductStart, getProductSuccess } from "./productRedux";
+import { addProductFail, addProductStart, addProductSuccess, deleteProductFail, deleteProductStart, deleteProductSuccess, getProductFail, getProductStart, getProductSuccess, updateProductFail, updateProductStart, updateProductSuccess } from "./productRedux";
 
 export const login = async(dispatch, user)=>{
     dispatch(loginStart())
@@ -11,6 +11,8 @@ export const login = async(dispatch, user)=>{
         dispatch(loginFailure());
     }
 };
+
+//Products
 export const getProducts = async(dispatch)=>{
     dispatch(getProductStart())
     try{
@@ -24,9 +26,38 @@ export const deleteProducts = async(id, dispatch)=>{
     dispatch(deleteProductStart())
     try{
         //to prevent deletion of products from database
-        // const res = await userRequest.delete(`/products/${id}`);
+        const res = await userRequest.delete(`/products/${id}`);
         dispatch(deleteProductSuccess(id))
     }catch(err){
         dispatch(deleteProductFail());
     }
 };
+export const updateProducts = async(id, product, dispatch)=>{
+    dispatch(updateProductStart())
+    try{
+        const res = await userRequest.put(`/products/${id}`, product);
+        dispatch(updateProductSuccess({id, product}))
+    }catch(err){
+        dispatch(updateProductFail());
+    }
+};
+export const addProducts = async(product, dispatch)=>{
+    dispatch(addProductStart())
+    try{
+        const res = await userRequest.post(`/products`, product);
+        dispatch(addProductSuccess(res.data))
+    }catch(err){
+        dispatch(addProductFail());
+    }
+};
+
+//Users
+export const getUsers = async(dispatch)=>{
+    dispatch(getUserStart())
+    try{
+        const res = await userRequest.get('/users')
+        dispatch(getUserSuccess(res.data))
+    }catch(err){
+        dispatch(getUserFail())
+    }
+}

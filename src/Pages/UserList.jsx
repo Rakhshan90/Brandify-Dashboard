@@ -1,17 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
 import styled from 'styled-components';
 import { DeleteOutline } from '@material-ui/icons';
-import { userRows } from '../dummyData';
 import { Link } from 'react-router-dom';
+import Topbar from '../Components/Topbar';
+import Sidebar from '../Components/Sidebar';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsers } from '../redux/apiCalls';
 
 
 const Container = styled.div`
 flex: 4; 
 `;
 const Wrapper = styled.div`
+
+`;
+const SidebarContainer = styled.div`
 display: flex;
-align-items: center;
 `;
 const Image = styled.img`
 width: 32px;
@@ -40,18 +45,24 @@ align-items: center;
 
 
 export default function UserList() {
-  const [user, setUser] = useState(userRows);
-  const handleClick = (id)=>{
-    setUser(user.filter((item)=>item.id !== id));
+  const dispatch = useDispatch()
+  const users = useSelector((state)=>state.user.users)
+
+  useEffect(()=>{
+    getUsers(dispatch)
+  }, [dispatch])
+  const handleClick = (id) => {
+    setUser(users.filter((item) => item.id !== id));
   }
 
+  
   const columns = [
-    { field: 'id', headerName: 'ID', width: 120 },
+    { field: '_id', headerName: 'ID', width: 280 },
     {
-      field: 'user', headerName: 'User', width: 200, renderCell: (params) => {
+      field: 'username', headerName: 'User', width: 250, renderCell: (params) => {
         return (
           <Wrapper>
-            <Image src={params.row.avatar} alt="" ></Image>
+            <Image src={params.row.img} alt="" ></Image>
             {params.row.username}
           </Wrapper>
         )
@@ -59,14 +70,9 @@ export default function UserList() {
     },
     { field: 'email', headerName: 'Email', width: 200 },
     {
-      field: 'status',
+      field: 'isAdmin',
       headerName: 'Status',
       width: 150,
-    },
-    {
-      field: 'transaction',
-      headerName: 'Transaction',
-      width: 200,
     },
     {
       field: 'action',
@@ -75,11 +81,11 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-          <Link to={"/user/" + params.row.id}>
-            <Button>Edit</Button>
-          </Link>
-            <DeleteIcon onClick={()=>handleClick(params.row.id)}>
-            <DeleteOutline />
+            <Link to={"/user/" + params.row.id}>
+              <Button>Edit</Button>
+            </Link>
+            <DeleteIcon onClick={() => handleClick(params.row.id)}>
+              <DeleteOutline />
             </DeleteIcon>
           </>
         )
@@ -87,18 +93,25 @@ export default function UserList() {
     },
   ];
 
-  
+
 
   return (
-    <Container>
-      <DataGrid
-        rows={user}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={10}
-        checkboxSelection
-      />
-    </Container>
+    <Wrapper>
+      <Topbar />
+      <SidebarContainer>
+        <Sidebar />
+        <Container>
+          <DataGrid
+            rows={users}
+            disableSelectionOnClick
+            columns={columns}
+            getRowId={(row)=>row._id}
+            pageSize={10}
+            checkboxSelection
+          />
+        </Container>
+      </SidebarContainer>
+    </Wrapper>
   )
 }
 

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { login } from '../redux/apiCalls';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const Container = styled.div`
@@ -16,7 +18,7 @@ padding: 10px;
 margin-bottom: 20px;
 `;
 const Button = styled.button`
-width: 17vw;
+width: 15vw;
 padding: 10px;
 border: none;
 border-radius: 4px;
@@ -27,19 +29,21 @@ font-weight: 500;
 `;
 
 const Login = () => {
-    const[username, setUsername] = useState("")
-    const[password, setPassword] = useState("")
-    const dispatch = useDispatch()
-    const clickHandler = (e)=>{
-      e.preventDefault()
-      login(dispatch, {username, password})
-    }
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const clickHandler = (e) => {
+    e.preventDefault()
+    login(dispatch, { username, password })
+    navigate('/')
+  }
 
   return (
     <Container>
-        <Input type='text' placeholder='username' onChange={(e)=>setUsername(e.target.value)} />
-        <Input type='password' placeholder='password' onChange={(e)=>setPassword(e.target.value)} />
-        <Button onClick={clickHandler}>Login</Button>
+      <Input type='text' placeholder='username' onChange={(e) => setUsername(e.target.value)} />
+      <Input type='password' placeholder='password' onChange={(e) => setPassword(e.target.value)} />
+      <Button onClick={clickHandler}>Login</Button>
     </Container>
   )
 }

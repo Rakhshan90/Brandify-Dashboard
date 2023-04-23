@@ -2,7 +2,14 @@ import { CalendarToday, Email, LocationSearching, MailOutline, PermIdentity, Pho
 import React from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Topbar from '../Components/Topbar';
+import Sidebar from '../Components/Sidebar';
 
+
+const Wrapper = styled.div``;
+const SidebarContainer = styled.div`
+display: flex;
+`;
 const Container = styled.div`
 flex: 4;
 padding: 20px;
@@ -140,92 +147,98 @@ font-weight: 600;
 
 const User = () => {
     return (
-        <Container>
-            <UserTitleContainer>
-                <Title>Edit User</Title>
-                <Link to="/newUser" ><Button>Create</Button></Link>
-            </UserTitleContainer>
-            <UserContainer>
-                <UserDisplay>
-                    <UserShowTop>
-                        <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" alt=""></Image>
-                        <UserShowTopTitle>
-                            <Name>Adam</Name>
-                            <Role>Software Engineer</Role>
-                        </UserShowTopTitle>
-                    </UserShowTop>
-                    <UserShowBottom>
-                        <UserShowTitle>Account Details</UserShowTitle>
-                        <UserShowInfo>
-                            <UserShowIcon>
-                                <PermIdentity />
-                            </UserShowIcon>
-                            <UserShowInfoTitle>Adam3921</UserShowInfoTitle>
-                        </UserShowInfo>
-                        <UserShowInfo>
-                            <UserShowIcon>
-                                <CalendarToday />
-                            </UserShowIcon>
-                            <UserShowInfoTitle>10.05.1998</UserShowInfoTitle>
-                        </UserShowInfo>
-                        <UserShowTitle>Contact Details</UserShowTitle>
-                        <UserShowInfo>
-                            <UserShowIcon>
-                                <PhoneAndroid />
-                            </UserShowIcon>
-                            <UserShowInfoTitle>+91 23121XXXXX</UserShowInfoTitle>
-                        </UserShowInfo>
-                        <UserShowInfo>
-                            <UserShowIcon>
-                                <MailOutline />
-                            </UserShowIcon>
-                            <UserShowInfoTitle>adam@gmail.com</UserShowInfoTitle>
-                        </UserShowInfo>
-                        <UserShowInfo>
-                            <UserShowIcon>
-                                <LocationSearching />
-                            </UserShowIcon>
-                            <UserShowInfoTitle>Mumbai, India</UserShowInfoTitle>
-                        </UserShowInfo>
-                    </UserShowBottom>
-                </UserDisplay>
-                <UserUpdate>
-                    <UserUpdateTitle>Edit</UserUpdateTitle>
-                    <UserUpdateForm>
-                        <UserUpdateLeft>
-                            <UserUpdateItem>
-                                <Label>Username</Label>
-                                <Input type="text" placeholder="Adam3921" />
-                            </UserUpdateItem>
-                            <UserUpdateItem>
-                                <Label>Full name</Label>
-                                <Input type="text" placeholder="Adam sheikh" />
-                            </UserUpdateItem>
-                            <UserUpdateItem>
-                                <Label>Email</Label>
-                                <Input type="text" placeholder="adam@gmail.com" />
-                            </UserUpdateItem>
-                            <UserUpdateItem>
-                                <Label>Phone</Label>
-                                <Input type="text" placeholder="+91 23121XXXXX" />
-                            </UserUpdateItem>
-                            <UserUpdateItem>
-                                <Label>Address</Label>
-                                <Input type="text" placeholder="Mumbai | India" />
-                            </UserUpdateItem>
-                        </UserUpdateLeft>
-                        <UserUpdateRight>
-                            <UserUpdateUpload>
-                                <UserUpdateImage src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" alt=""></UserUpdateImage>
-                                <Label htmlFor='file'> <Publish style={{ cursor: "pointer" }} /> </Label>
-                                <Input type='file' id='file' style={{ display: "none" }} />
-                            </UserUpdateUpload>
-                            <UserUpdateButton>Update</UserUpdateButton>
-                        </UserUpdateRight>
-                    </UserUpdateForm>
-                </UserUpdate>
-            </UserContainer>
-        </Container>
+        <Wrapper>
+            <Topbar />
+            <SidebarContainer>
+                <Sidebar />
+                <Container>
+                    <UserTitleContainer>
+                        <Title>Edit User</Title>
+                        <Link to="/newUser" ><Button>Create</Button></Link>
+                    </UserTitleContainer>
+                    <UserContainer>
+                        <UserDisplay>
+                            <UserShowTop>
+                                <Image src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" alt=""></Image>
+                                <UserShowTopTitle>
+                                    <Name>Adam</Name>
+                                    <Role>Software Engineer</Role>
+                                </UserShowTopTitle>
+                            </UserShowTop>
+                            <UserShowBottom>
+                                <UserShowTitle>Account Details</UserShowTitle>
+                                <UserShowInfo>
+                                    <UserShowIcon>
+                                        <PermIdentity />
+                                    </UserShowIcon>
+                                    <UserShowInfoTitle>Adam3921</UserShowInfoTitle>
+                                </UserShowInfo>
+                                <UserShowInfo>
+                                    <UserShowIcon>
+                                        <CalendarToday />
+                                    </UserShowIcon>
+                                    <UserShowInfoTitle>10.05.1998</UserShowInfoTitle>
+                                </UserShowInfo>
+                                <UserShowTitle>Contact Details</UserShowTitle>
+                                <UserShowInfo>
+                                    <UserShowIcon>
+                                        <PhoneAndroid />
+                                    </UserShowIcon>
+                                    <UserShowInfoTitle>+91 23121XXXXX</UserShowInfoTitle>
+                                </UserShowInfo>
+                                <UserShowInfo>
+                                    <UserShowIcon>
+                                        <MailOutline />
+                                    </UserShowIcon>
+                                    <UserShowInfoTitle>adam@gmail.com</UserShowInfoTitle>
+                                </UserShowInfo>
+                                <UserShowInfo>
+                                    <UserShowIcon>
+                                        <LocationSearching />
+                                    </UserShowIcon>
+                                    <UserShowInfoTitle>Mumbai, India</UserShowInfoTitle>
+                                </UserShowInfo>
+                            </UserShowBottom>
+                        </UserDisplay>
+                        <UserUpdate>
+                            <UserUpdateTitle>Edit</UserUpdateTitle>
+                            <UserUpdateForm>
+                                <UserUpdateLeft>
+                                    <UserUpdateItem>
+                                        <Label>Username</Label>
+                                        <Input type="text" placeholder="Adam3921" />
+                                    </UserUpdateItem>
+                                    <UserUpdateItem>
+                                        <Label>Full name</Label>
+                                        <Input type="text" placeholder="Adam sheikh" />
+                                    </UserUpdateItem>
+                                    <UserUpdateItem>
+                                        <Label>Email</Label>
+                                        <Input type="text" placeholder="adam@gmail.com" />
+                                    </UserUpdateItem>
+                                    <UserUpdateItem>
+                                        <Label>Phone</Label>
+                                        <Input type="text" placeholder="+91 23121XXXXX" />
+                                    </UserUpdateItem>
+                                    <UserUpdateItem>
+                                        <Label>Address</Label>
+                                        <Input type="text" placeholder="Mumbai | India" />
+                                    </UserUpdateItem>
+                                </UserUpdateLeft>
+                                <UserUpdateRight>
+                                    <UserUpdateUpload>
+                                        <UserUpdateImage src="https://i.ibb.co/9yb61th/IMG-20190221-094518-Bokeh-01.jpg" alt=""></UserUpdateImage>
+                                        <Label htmlFor='file'> <Publish style={{ cursor: "pointer" }} /> </Label>
+                                        <Input type='file' id='file' style={{ display: "none" }} />
+                                    </UserUpdateUpload>
+                                    <UserUpdateButton>Update</UserUpdateButton>
+                                </UserUpdateRight>
+                            </UserUpdateForm>
+                        </UserUpdate>
+                    </UserContainer>
+                </Container>
+            </SidebarContainer>
+        </Wrapper>
     )
 }
 

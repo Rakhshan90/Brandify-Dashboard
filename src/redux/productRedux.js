@@ -7,48 +7,80 @@ const initialState = {
     error: false,
 }
 
-const productSlice = createSlice({
-    name : 'product',
+export const productSlice = createSlice({
+    name: 'product',
     initialState,
     reducers: {
         //GET ALL PRODUCTS
-        getProductStart: (state)=>{
+        getProductStart: (state) => {
             state.isFetching = true
             state.error = false
         },
-        getProductSuccess: (state, action)=>{
+        getProductSuccess: (state, action) => {
             state.isFetching = false
             state.products = action.payload
         },
-        getProductFail: (state)=>{
+        getProductFail: (state) => {
             state.isFetching = false
             state.error = true
         },
         //DELETE PRODUCT
-        deleteProductStart: (state)=>{
+        deleteProductStart: (state) => {
             state.isFetching = true
             state.error = false
         },
-        deleteProductSuccess: (state, action)=>{
+        deleteProductSuccess: (state, action) => {
             state.isFetching = false
             state.products.splice(
-                state.products.findIndex((item)=>item._id === action.payload), 1
+                state.products.findIndex((item) => item._id === action.payload), 1
             )
         },
-        deleteProductFail: (state)=>{
+        deleteProductFail: (state) => {
             state.isFetching = false
             state.error = true
-        }
+        },
+        //UPDATE PRODUCT
+        updateProductStart: (state) => {
+            state.isFetching = true
+            state.error = false
+        },
+        updateProductSuccess: (state, action) => {
+            state.isFetching = false
+            state.products[state.products.findIndex((item)=>item._id===action.payload.id)]
+            =action.payload.product
+        },
+        updateProductFail: (state) => {
+            state.isFetching = false
+            state.error = true
+        },
+        //ADD PRODUCT
+        addProductStart: (state) => {
+            state.isFetching = true
+            state.error = false
+        },
+        addProductSuccess: (state, action) => {
+            state.isFetching = false
+            state.products.push(action.payload)
+        },
+        addProductFail: (state) => {
+            state.isFetching = false
+            state.error = true
         },
     },
-)
+});
 
-export const { 
+export const {
     getProductStart,
     getProductSuccess,
     getProductFail,
     deleteProductStart,
     deleteProductSuccess,
-    deleteProductFail
-    } = productSlice.actions;
+    deleteProductFail,
+    updateProductStart,
+    updateProductSuccess,
+    updateProductFail,
+    addProductStart,
+    addProductSuccess,
+    addProductFail,
+} = productSlice.actions;
 export default productSlice.reducer;

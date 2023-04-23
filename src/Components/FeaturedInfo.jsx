@@ -63,7 +63,7 @@ const FeaturedInfo = () => {
                 <FeaturedMoneyContainer>
                     <FeaturedMoney>₹{income[1]?.total}</FeaturedMoney>
                     <FeaturedMoneyRate>
-                        {perc}%
+                    %{Math.floor(perc)}{" "}
                         {perc<0 ? (<ArrowDownwardOutlined style={{fontSize:"30px", marginLeft:"5px", 
                     color:"red"}}/>) : (<ArrowUpwardOutlined style={{fontSize:"30px", marginLeft:"5px", 
                     color:"green"}}/>) }

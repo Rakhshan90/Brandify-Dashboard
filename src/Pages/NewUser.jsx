@@ -1,6 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import Topbar from '../Components/Topbar';
+import Sidebar from '../Components/Sidebar';
 
+
+const Wrapper = styled.div``;
+const SidebarContainer = styled.div`
+display: flex;
+`;
 const Container = styled.div`
 margin-top: 20px;
 flex: 4;
@@ -59,58 +66,65 @@ font-weight: 600;
 
 
 const NewUser = () => {
-  return (
-    <Container>
-        <NewUserTitle>New User</NewUserTitle>
-        <NewUserForm>
-            <NewUserItem>
-                <Label>Username</Label>
-                <Input type="text" placeholder="chris" />
-            </NewUserItem>
-            <NewUserItem>
-                <Label>Full Name</Label>
-                <Input type="text" placeholder="chris bale" />
-            </NewUserItem>
-            <NewUserItem>
-                <Label>Email</Label>
-                <Input type="email" placeholder="user@example.com" />
-            </NewUserItem>
-            <NewUserItem>
-                <Label>Password</Label>
-                <Input type="password" placeholder="password" />
-            </NewUserItem>
-            <NewUserItem>
-                <Label>Phone</Label>
-                <Input type="text" placeholder="+91 329382XXXX" />
-            </NewUserItem>
-            <NewUserItem>
-                <Label>Address</Label>
-                <Input type="text" placeholder="UP | India" />
-            </NewUserItem>
-            <NewUserItem>
-                <Label>Gender</Label>
-                <NewUserGender>
-                    <Input type='radio' name='gender' value='male' id='male' />
-                    <Label for="male">Male</Label>
-                    <Input type='radio' name='gender' value='female' id='female' />
-                    <Label for="female">Female</Label>
-                    <Input type='radio' name='gender' value='other' id='other' />
-                    <Label for="other">Other</Label>
-                </NewUserGender>
-            </NewUserItem>
-            <NewUserItem>
-                <Label>Active</Label>
-                <Select name='active' id='active'>
-                    <Option value='yes'>Yes</Option>
-                    <Option value='no'>No</Option>
-                </Select>
-            </NewUserItem>
-            <NewUserItem>
-            <NewUserButton>Create</NewUserButton>
-            </NewUserItem>
-        </NewUserForm>
-    </Container>
-  )
+    return (
+        <Wrapper>
+            <Topbar />
+            <SidebarContainer>
+                <Sidebar />
+
+                <Container>
+                    <NewUserTitle>New User</NewUserTitle>
+                    <NewUserForm>
+                        <NewUserItem>
+                            <Label>Username</Label>
+                            <Input type="text" placeholder="chris" />
+                        </NewUserItem>
+                        <NewUserItem>
+                            <Label>Full Name</Label>
+                            <Input type="text" placeholder="chris bale" />
+                        </NewUserItem>
+                        <NewUserItem>
+                            <Label>Email</Label>
+                            <Input type="email" placeholder="user@example.com" />
+                        </NewUserItem>
+                        <NewUserItem>
+                            <Label>Password</Label>
+                            <Input type="password" placeholder="password" />
+                        </NewUserItem>
+                        <NewUserItem>
+                            <Label>Phone</Label>
+                            <Input type="text" placeholder="+91 329382XXXX" />
+                        </NewUserItem>
+                        <NewUserItem>
+                            <Label>Address</Label>
+                            <Input type="text" placeholder="UP | India" />
+                        </NewUserItem>
+                        <NewUserItem>
+                            <Label>Gender</Label>
+                            <NewUserGender>
+                                <Input type='radio' name='gender' value='male' id='male' />
+                                <Label for="male">Male</Label>
+                                <Input type='radio' name='gender' value='female' id='female' />
+                                <Label for="female">Female</Label>
+                                <Input type='radio' name='gender' value='other' id='other' />
+                                <Label for="other">Other</Label>
+                            </NewUserGender>
+                        </NewUserItem>
+                        <NewUserItem>
+                            <Label>Active</Label>
+                            <Select name='active' id='active'>
+                                <Option value='yes'>Yes</Option>
+                                <Option value='no'>No</Option>
+                            </Select>
+                        </NewUserItem>
+                        <NewUserItem>
+                            <NewUserButton>Create</NewUserButton>
+                        </NewUserItem>
+                    </NewUserForm>
+                </Container>
+            </SidebarContainer>
+        </Wrapper>
+    )
 }
 
 export default NewUser
