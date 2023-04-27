@@ -82,7 +82,7 @@ What challenges did you face and how did you overcome them?
 This project is used in:
 
 - My e-commerce store 
-- I will be used it in my another future projects
+- I will use it in my another future projects
 
 
 ## 🚀 About Me
