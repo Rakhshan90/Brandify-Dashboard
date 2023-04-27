@@ -13,7 +13,7 @@ The REST APIs are all derived from my backend application
 
 ## Demo
 
-Insert gif or link to demo
+https://user-images.githubusercontent.com/92143665/234947925-1d9c3e74-2ea9-4a39-b72c-75b30312033e.mp4
 
 
 ## Features
@@ -89,6 +89,10 @@ This project is used in:
 I am a full-stack developer with a primary focus on frontend development. I have experience working with the MERN stack for web development.
 I have solved 200+ questions across multiple platforms such as gfg, coding ninjas and leetcode.
 Currently, I am focusing on improving my problem-solving skills.
+
+
+
+
 
 ## 🛠 Skills
 Javascript, HTML, CSS, React.js, Node.js, MongoDb, Express.js, Firebase, Redux toolkit, git and gitHub, MUI...
